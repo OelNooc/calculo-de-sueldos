@@ -39,7 +39,6 @@ class CalculoEmpleadoHonorarios : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CalculoDeSueldosTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -127,6 +126,15 @@ fun CalculoEmpleadoHonorariosScreen() {
                     textAlign = TextAlign.Center,
                     color = Color.Black
                 )
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Button(
+                    onClick = { /* Acción para volver */ },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = stringResource(id = R.string.volver))
+                }
             }
         }
     }

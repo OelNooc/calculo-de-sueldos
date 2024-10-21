@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">CalculoDeSueldos</string>
+    <string name="bienvenida">Bienvenido a la App para calcular el sueldo de los empleados</string>
+    <string name="calculo_regular">Calcular sueldo empleado regular</string>
+    <string name="calculo_honorarios">Calcular sueldo empleado a honorarios</string>
+    <string name="volver">Volver al inicio</string>
     <string name="calc_sueldo_reg_title">Calcula el sueldo líquido de un empleado regular</string>
     <string name="title_activity_calculo_empleado_honorarios">Calcula el sueldo líquido de un empleado a honorarios</string>
     <string name="ingresa_el_sueldo_bruto">Ingresa el sueldo bruto</string>
