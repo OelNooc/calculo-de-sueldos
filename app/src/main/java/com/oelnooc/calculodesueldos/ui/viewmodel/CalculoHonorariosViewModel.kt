@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oelnooc.calculodesueldos.MainActivity
-import com.oelnooc.calculodesueldos.data.model.EmpleadoRegular
+import com.oelnooc.calculodesueldos.data.model.EmpleadoHonorarios
 
-class CalculoRegularViewModel : ViewModel() {
+class CalculoHonorariosViewModel : ViewModel() {
     private val _montoLiquido = MutableLiveData<String>()
     val montoLiquido: LiveData<String> get() = _montoLiquido
 
@@ -23,8 +23,8 @@ class CalculoRegularViewModel : ViewModel() {
 
     fun calcularSueldoLiquido(sueldoBrutoText: String) {
         val sueldoBruto = sueldoBrutoText.toDoubleOrNull() ?: 0.0
-        val empleadoRegular = EmpleadoRegular(sueldoBruto)
-        val sueldoLiquido = empleadoRegular.calcularLiquido()
+        val empleadoHonorarios = EmpleadoHonorarios(sueldoBruto)
+        val sueldoLiquido = empleadoHonorarios.calcularLiquido()
 
         _montoLiquido.value = sueldoLiquido.toString()
     }

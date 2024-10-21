@@ -3,36 +3,33 @@ package com.oelnooc.calculodesueldos.ui.view
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.oelnooc.calculodesueldos.R
-import com.oelnooc.calculodesueldos.ui.view.ui.theme.CalculoDeSueldosTheme
+import com.oelnooc.calculodesueldos.ui.theme.CalculoDeSueldosTheme
+import com.oelnooc.calculodesueldos.ui.viewmodel.CalculoHonorariosViewModel
 
 class CalculoEmpleadoHonorarios : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,9 +47,11 @@ class CalculoEmpleadoHonorarios : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalculoEmpleadoHonorariosScreen() {
+fun CalculoEmpleadoHonorariosScreen(viewModel: CalculoHonorariosViewModel = viewModel()) {
+    var sueldoBruto by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -94,8 +93,8 @@ fun CalculoEmpleadoHonorariosScreen() {
                         contentAlignment = Alignment.Center
                     ) {
                         OutlinedTextField(
-                            value = "",  // Aquí deberías manejar el estado del texto
-                            onValueChange = {},
+                            value = sueldoBruto,
+                            onValueChange = { sueldoBruto = it },
                             label = { Text(text = stringResource(id = R.string.ingresa_el_sueldo_bruto)) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             modifier = Modifier.fillMaxWidth()
@@ -105,7 +104,7 @@ fun CalculoEmpleadoHonorariosScreen() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Button(onClick = { /* Acción del botón */ }) {
+                Button(onClick = { viewModel.calcularSueldoLiquido(sueldoBruto) }) {
                     Text(text = stringResource(id = R.string.calcular))
                 }
 
@@ -120,8 +119,9 @@ fun CalculoEmpleadoHonorariosScreen() {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
+                val monto by viewModel.montoLiquido.observeAsState("0")
                 Text(
-                    text = stringResource(id = R.string.monto_inicial),
+                    text = monto,
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
                     color = Color.Black
@@ -130,7 +130,7 @@ fun CalculoEmpleadoHonorariosScreen() {
                 Spacer(modifier = Modifier.height(30.dp))
 
                 Button(
-                    onClick = { /* Acción para volver */ },
+                    onClick = { viewModel.volverAInicio(context) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(text = stringResource(id = R.string.volver))
