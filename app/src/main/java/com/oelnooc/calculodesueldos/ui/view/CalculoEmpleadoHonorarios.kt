@@ -26,21 +26,29 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.oelnooc.calculodesueldos.R
 import com.oelnooc.calculodesueldos.ui.theme.CalculoDeSueldosTheme
 import com.oelnooc.calculodesueldos.ui.viewmodel.CalculoHonorariosViewModel
 
 class CalculoEmpleadoHonorarios : ComponentActivity() {
+
+    private lateinit var viewModel: CalculoHonorariosViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(CalculoHonorariosViewModel::class.java)
+        viewModel.orientation.observe(this, Observer { orientation ->
+            requestedOrientation = orientation
+        })
         setContent {
             CalculoDeSueldosTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CalculoEmpleadoHonorariosScreen()
+                    CalculoEmpleadoHonorariosScreen(viewModel)
                 }
             }
         }
