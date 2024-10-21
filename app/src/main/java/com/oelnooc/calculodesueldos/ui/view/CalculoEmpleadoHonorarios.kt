@@ -73,7 +73,7 @@ fun CalculoEmpleadoHonorariosScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(id = R.string.calc_sueldo_reg_title),
+                    text = stringResource(id = R.string.calc_sueldo_hon_title),
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center,
                     color = Color.Black
