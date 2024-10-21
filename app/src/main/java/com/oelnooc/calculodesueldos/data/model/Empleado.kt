@@ -1,4 +1,5 @@
 package com.oelnooc.calculodesueldos.data.model
 
-class Empleado {
+abstract class Empleado (val sueldoBruto: Double) {
+    abstract fun calcularLiquido(): Double
 }
